@@ -1,1 +1,19 @@
+@font-face {
+    font-family: "Pixellari";
+    src: url("/fonts/Pixellari.woff") format("woff");
+}
 
+h1.main-title {
+    font-family: "Pixellari";
+    text-align: center;
+}
+
+.light-mode {
+    background-color: white;
+    color: black;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
