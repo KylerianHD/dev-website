@@ -3,17 +3,70 @@
     src: url("/fonts/Pixellari.woff") format("woff");
 }
 
+body, html {
+    background-color: #000;
+    color: #0f0;
+    font-family: monospace;
+    font-size: 16px;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 h1.main-title {
     font-family: "Pixellari";
     text-align: center;
 }
 
-.light-mode {
-    background-color: white;
-    color: black;
+#terminal {
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
-.dark-mode {
-    background-color: black;
-    color: white;
+#output {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#input-line {
+    display: flex;
+    margin-top: 10px;
+}
+
+#prompt {
+    color: #0f0;
+    margin-right: 10px;
+}
+
+#input-container {
+    position: relative;
+    flex-grow: 1;
+}
+
+#user-input {
+    background-color: transparent;
+    border: none;
+    color: #0f0;
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    width: 80%;
+    caret-color: transparent; /* This hides the default text cursor */
+}
+
+#cursor {
+    position: absolute;
+    bottom: .25em;
+    width: 10px;
+    height: .1em;
+    background-color: #0f0;
+    animation: blink 0.5s step-end infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }

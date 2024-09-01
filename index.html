@@ -4,14 +4,29 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/images/fav.ico" />
     <link rel="stylesheet" href="css/main.css" />
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
     <title>Dev.KylerianHD</title>
   </head>
   <body>
+    <!-- Basic configuration -->
     <h1 class="main-title">KylerianHD's Toolbox</h1>
-    <button onclick="LightMode()">LightMode</button>
-    <button onclick="DarkMode()">DarkMode</button>
+
+    <!-- Terminal-style related configuration -->
+    <div id="terminal">
+      <div id="welcome">
+        <p>Welcome to my Toolbox!</p>
+        <p>Type 'help' for a list of commands.</p>
+      </div>
+      <div id="output"></div>
+      <div id="input-line">
+          <span id="prompt">[toolbox@kylerianhd ~]$</span>
+          <span id="input-container">
+            <input type="text" id="user-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus>
+            <span id="cursor"></span>
+          </span>
+      </div>
+  </div>
   </body>
 </html>
