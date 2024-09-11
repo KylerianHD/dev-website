@@ -1,4 +1,10 @@
 //
+// Imports
+//
+
+import { initializeBase64Converter, isInBase64Converter } from './base64.js';
+
+//
 // Terminal-style related configuration
 //
 
@@ -12,14 +18,16 @@ let commandHistory = [];
 let historyIndex = -1;
 let currentDirectory = '~';
 
-const commands = ['help', 'clear', 'echo', 'whoami', 'ls', 'cd'];
+const commands = ['help', 'clear', 'echo', 'whoami', 'ls', 'cd', 'base64.sh'];
 
 const fileSystem = {
     '~': {
-        'Base64-Converter': {},
+        'Base64-Converter': {
+            'base64.sh': 'executable'
+        },
         'Hashing': {},
         'SHA-Converter': {},
-        'Other-Projects/Tools': {}
+        'Other-ToolsOrProjects': {}
     }
 };
 
@@ -50,6 +58,14 @@ function processCommand(command) {
             break;
         case 'echo':
             output.innerHTML += `${command.slice(5)}\n`; // maybe `${args.join(' ')}\n` instead
+            break;
+        case 'base64.sh':
+            if (isInBase64Converter(currentDirectory)) {
+                console.log("Initializing Base64 converter");
+                initializeBase64Converter(output, terminal);
+            } else {
+                output.innerHTML += "Error: base64.sh can only be executed in the Base64-Converter directory.\n";
+            }
             break;
         default:
             if (command.trim() !== '') {
@@ -174,3 +190,5 @@ window.onload = function() {
     updatePrompt();
     updateCursorPosition();
 };
+
+console.log("main.js loaded");
