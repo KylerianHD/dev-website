@@ -3,6 +3,7 @@
 //
 
 import { initializeBase64Converter, isInBase64Converter } from './base64.js';
+import { initializeSHAConverter, isInSHADir } from './shaConverter.js';
 
 //
 // Basic configuration
@@ -56,7 +57,7 @@ let commandHistory = [];
 let historyIndex = -1;
 let currentDirectory = '~';
 
-const commands = ['help', 'clear', 'echo', 'whoami', 'ls', 'cd', 'base64.sh'];
+const commands = ['help', 'clear', 'echo', 'whoami', 'ls', 'cd', 'base64.sh', 'sha.sh'];
 
 const fileSystem = {
     '~': {
@@ -64,7 +65,9 @@ const fileSystem = {
             'base64.sh': 'executable'
         },
         'Hashing': {},
-        'SHA-Converter': {},
+        'SHA-Converter': {
+            'sha.sh': 'executable'
+        },
         'Other-ToolsOrProjects': {}
     }
 };
@@ -95,7 +98,7 @@ function processCommand(command) {
             output.innerHTML = "";
             break;
         case 'echo':
-            output.innerHTML += `${command.slice(5)}\n`; // maybe `${args.join(' ')}\n` instead
+            output.innerHTML += `${command.slice(5)}\n`;
             break;
         case 'base64.sh':
             if (isInBase64Converter(currentDirectory)) {
@@ -103,6 +106,14 @@ function processCommand(command) {
                 initializeTool(initializeBase64Converter);
             } else {
                 output.innerHTML += "Error: base64.sh can only be executed in the Base64-Converter directory.\n";
+            }
+            break;
+        case 'sha.sh':
+            if (isInSHADir(currentDirectory)) {
+                console.log("Initializing SHA converter");
+                initializeTool(initializeSHAConverter);
+            } else {
+                output.innerHTML += "Error: sha.sh can only be executed in the SHA-Converter directory.\n";
             }
             break;
         default:
