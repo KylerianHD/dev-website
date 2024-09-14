@@ -5,11 +5,49 @@
 import { initializeBase64Converter, isInBase64Converter } from './base64.js';
 
 //
+// Basic configuration
+//
+
+const output = document.getElementById('output');
+
+let isToolActive = false;
+let activeToolElement = null;
+
+function deactivateCurrentTool() {
+    if (activeToolElement) {
+        // Remove the tool's UI elements
+        activeToolElement.remove();
+        activeToolElement = null;
+    }
+    showInputLine();
+    output.innerHTML += "^C\n";
+    updatePrompt();
+    terminal.scrollTop = terminal.scrollHeight;
+}
+
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.key === 'c') {
+        if (isToolActive) {
+            deactivateCurrentTool();
+        }
+    }
+});
+
+function initializeTool(toolInitFunction) {
+    hideInputLine();
+    const toolContainer = document.createElement('div');
+    toolContainer.classList.add('tool-container');
+    output.appendChild(toolContainer);
+    activeToolElement = toolContainer;
+    toolInitFunction(toolContainer);
+    terminal.scrollTop = terminal.scrollHeight;
+}
+
+//
 // Terminal-style related configuration
 //
 
 const terminal = document.getElementById('terminal');
-const output = document.getElementById('output');
 const userInput = document.getElementById('user-input');
 const prompt = document.getElementById('prompt');
 const cursor = document.getElementById('cursor');
@@ -62,7 +100,7 @@ function processCommand(command) {
         case 'base64.sh':
             if (isInBase64Converter(currentDirectory)) {
                 console.log("Initializing Base64 converter");
-                initializeBase64Converter(output, terminal);
+                initializeTool(initializeBase64Converter);
             } else {
                 output.innerHTML += "Error: base64.sh can only be executed in the Base64-Converter directory.\n";
             }
@@ -72,9 +110,11 @@ function processCommand(command) {
                 output.innerHTML += `Command not found: ${command}\n`;
             }
     }
-    output.innerHTML += '\n';
-    terminal.scrollTop = terminal.scrollHeight;
-    updatePrompt();
+    if (!isToolActive) {
+        output.innerHTML += '\n';
+        terminal.scrollTop = terminal.scrollHeight;
+        updatePrompt();
+    }
 }
 
 function listDirectory() {
@@ -149,6 +189,16 @@ function tabComplete() {
     }
 
     updateCursorPosition();
+}
+
+function hideInputLine() {
+    document.getElementById('input-line').style.display = 'none';
+    isToolActive = true;
+}
+
+function showInputLine() {
+    document.getElementById('input-line').style.display = 'flex';
+    isToolActive = false;
 }
 
 userInput.addEventListener('input', updateCursorPosition);

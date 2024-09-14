@@ -3,12 +3,13 @@
 let base64Input = '';
 let base64Output = '';
 
-function initializeBase64Converter() {
-    const terminal = document.getElementById('terminal');
+function initializeBase64Converter(container) {
     const output = document.getElementById('output');
 
-    output.innerHTML = '';
-    
+    // Create title display
+    const titleDisplay = document.createElement('pre');
+    titleDisplay.textContent = 'Base64 Converter';
+
     // Create input field
     const inputField = document.createElement('input');
     inputField.type = 'text';
@@ -21,23 +22,21 @@ function initializeBase64Converter() {
     outputDisplay.innerHTML = `<pre>Encoded: </pre>`;
     
     // Append new elements
-    output.appendChild(document.createTextNode('Base64 Converter\n'));
-    output.appendChild(inputField);
-    output.appendChild(document.createElement('br'));
-    output.appendChild(outputDisplay);
+    container.appendChild(titleDisplay);
+    container.appendChild(inputField);
+    container.appendChild(outputDisplay);
     
-    console.log('Base64 converter initialized');
-
     // Event listener for real-time encoding
     output.addEventListener('input', (e) => {
         if (e.target && e.target.id === inputField.id) {
             const inputValue = e.target.value;
-            handleInput(inputValue);
+            handleInput(inputValue, container);
         }
     });
     
-    // Scroll to the bottom of the terminal
-    terminal.scrollTop = terminal.scrollHeight;
+    inputField.focus();
+
+    console.log('Base64 converter initialized');
 }
 
 function handleInput(inputValue) {
