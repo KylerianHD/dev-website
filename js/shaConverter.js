@@ -9,13 +9,6 @@ function initializeSHAConverter(container) {
     converterInput.type = 'text';
     converterInput.id = 'sha-input';
     converterInput.placeholder = 'Enter text to convert';
-    converterInput.style.width = '100%';
-    converterInput.style.backgroundColor = 'transparent';
-    converterInput.style.color = '#0f0';
-    converterInput.style.border = 'none';
-    converterInput.style.outline = 'none';
-    converterInput.style.fontFamily = 'inherit';
-    converterInput.style.fontSize = 'inherit';
     
     const sha1Output = document.createElement('p');
     sha1Output.id = 'sha1-output';
